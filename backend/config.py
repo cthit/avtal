@@ -1,5 +1,8 @@
 import os
 
+# SECURITY
+API_KEY = os.environ.get('API_KEY', 'SECRETKEY')
+
 # POSTGRES SETTINGS
 POSTGRES_USER = os.environ.get('POSTGRES_USER', 'postgres')
 POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD', 'example')

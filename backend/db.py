@@ -1,16 +1,23 @@
 import datetime
 from uuid import UUID
 
-from pony.orm import Database, Required
+from pony.orm import Database, Required, db_session
 
 import config
 
 db = Database()
 
+
 class Agreement(db.Entity):
     id = Required(UUID, auto=True)
     hubbit = Required(datetime)
     bookit = Required(datetime)
+
+
+@db_session
+def get_agreement(id):
+    return Agreement[id]
+
 
 db.bind(
     provider='postgres',
