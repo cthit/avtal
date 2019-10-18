@@ -1,0 +1,18 @@
+version: "2"
+services:
+    frontend:
+        build:
+            context: ./frontend/
+            dockerfile: dev.Dockerfile
+        ports:
+            - 3000:3000
+        volumes:
+            - ./frontend/src:/usr/src/app/src
+            - ./frontend/public:/usr/src/app/public
+    db:
+        image: postgres:12
+        restart: always
+        environment:
+            POSTGRES_PASSWORD: example
+        ports:
+            - 5432:5432
