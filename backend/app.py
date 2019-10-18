@@ -3,8 +3,8 @@ import json
 from os import listdir
 from os.path import isfile, join
 
-app = Flask(__name__)
 
+app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
@@ -31,4 +31,8 @@ def get_all_agreements():
 if __name__ == '__main__':
     app.run()
 
+
 # Supply and store markdown files.
+
+
+
