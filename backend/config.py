@@ -7,7 +7,7 @@ API_KEY = os.environ.get('API_KEY', 'SECRETKEY')
 POSTGRES_USER = os.environ.get('POSTGRES_USER', 'postgres')
 POSTGRES_PASSWORD = os.environ.get('POSTGRES_PASSWORD', 'example')
 POSTGRES_HOST = os.environ.get('POSTGRES_HOST', 'localhost')
-POSTGRES_POST = os.environ.get('POSTGRES_PORT', '5432')
+POSTGRES_POST = os.environ.get('POSTGRES_PORT', '5433')
 POSTGRES_DB = os.environ.get('POSTGRES_DB', 'postgres')
 
 # GAMMA

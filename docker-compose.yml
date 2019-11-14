@@ -10,7 +10,7 @@ services:
       - ./frontend/src:/usr/src/app/src
       - ./frontend/public:/usr/src/app/public
   db:
-    image: postgres:12
+    image: postgres:11
     restart: always
     environment:
       POSTGRES_PASSWORD: example
