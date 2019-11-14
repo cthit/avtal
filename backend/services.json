@@ -1,0 +1,12 @@
+[
+  {
+    "name": "hubbit",
+    "location": "./agreements/hubbit.md",
+    "last_updated": "2019-08-18T20:10:25"
+  },
+  {
+    "name": "bookit",
+    "location": "./agreements/bookit.md",
+    "last_updated": "2019-11-14T22:55:00"
+  }
+]
