@@ -1,9 +1,14 @@
 import React from "react";
 
-import { DigitButton } from "@cthit/react-digit-components";
+import { DigitHeader, DigitProviders } from "@cthit/react-digit-components";
+import Avtal from "../use-cases/avtal/index";
 
 const App = () => {
-    return <DigitButton text={"hej"} />;
+    return (
+        <DigitProviders>
+            <DigitHeader title={"Avtal"} renderMain={() => <Avtal />} />
+        </DigitProviders>
+    );
 };
 
 export default App;
