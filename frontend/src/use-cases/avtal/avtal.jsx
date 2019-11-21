@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { putAccept } from "../../api/avtal/put.accept.api";
+import { putAccept, getAgreement } from "../../api/avtal/put.accept.api";
 import { DigitMarkdown, DigitButton } from "@cthit/react-digit-components";
+import { useParams } from "react-router";
 
 const AvtalHolder = styled.div`
     background: #fff;
@@ -17,26 +18,29 @@ const AvtalButton = styled.div`
 
 const Avtal = () => {
     //Read from api
-    const input = "# This is a header\nAnd this is a paragraph";
+    const { service } = useParams();
+    const md = getAgreement(service);
+
     return (
         <AvtalHolder>
-            <DigitMarkdown markdownSource={input} />
+            <DigitMarkdown markdownSource={md} />
             <AvtalButton>
                 <DigitButton
                     //Change to translated string
                     text="Accept the Agreement"
                     primary
                     raised
-                    onClick={() => agreementAccepted()}
+                    onClick={() => agreementAccepted(service)}
                 />
             </AvtalButton>
         </AvtalHolder>
     );
 };
 
-function agreementAccepted() {
+function agreementAccepted(serviceName) {
     // TODO: GET SERIVCE NAME FROM ENDPOINT
-    putAccept();
+    putAccept(serviceName);
+    console.log(serviceName);
 }
 
 export default Avtal;

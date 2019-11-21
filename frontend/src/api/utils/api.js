@@ -3,7 +3,7 @@ import _ from "lodash";
 
 const path = process.env.REACT_APP_BACKEND_URL || "http://localhost:5000/api";
 
-export function getRequest() {
+export function getRequest(endpoint) {
     return axios.get(removeLastSlash(path + endpoint));
 }
 
