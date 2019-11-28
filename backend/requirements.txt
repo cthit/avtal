@@ -1,6 +1,7 @@
 requests
 Flask
 flask-restful
+flask-cors
 pony
 psycopg2
 rauth
