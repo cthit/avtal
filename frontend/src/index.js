@@ -2,12 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./app";
 import * as serviceWorker from "./serviceWorker";
-import { BrowserRouter as Router } from "react-router-dom";
+
+import { DigitProviders } from "@cthit/react-digit-components";
 
 ReactDOM.render(
-    <Router>
+    <DigitProviders>
         <App />
-    </Router>,
+    </DigitProviders>,
     document.getElementById("root")
 );
 
