@@ -1,12 +1,16 @@
-[
-  {
-    "name": "hubbit",
-    "location": "./agreements/hubbit.md",
-    "last_updated": "2019-08-18T20:10:25"
-  },
-  {
-    "name": "bookit",
-    "location": "./agreements/bookit.md",
-    "last_updated": "2019-12-02T22:55:00"
-  }
+[{
+        "name": "hubbit",
+        "location": "./agreements/hubbit.md",
+        "last_updated": "2019-08-18T20:10:25"
+    },
+    {
+        "name": "bookit",
+        "location": "./agreements/bookit.md",
+        "last_updated": "2019-12-02T22:55:00"
+    },
+    {
+        "name": "suggestit",
+        "location": "./agreements/suggestit.md",
+        "last_updated": "2020-03-25T17:00:00"
+    }
 ]
