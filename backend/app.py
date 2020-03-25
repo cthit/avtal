@@ -6,6 +6,7 @@ from flask_restful import Resource, Api
 import json
 from os import listdir
 from os.path import isfile, join
+from flask_cors import CORS
 
 import db
 import auth
@@ -13,6 +14,7 @@ import setup
 
 app = Flask(__name__)
 api = Api(app)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 # YYYY-MM-DDTHH:MM:SS
 #
