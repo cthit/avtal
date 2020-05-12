@@ -24,6 +24,12 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 #
 
 
+@app.route("/api/")
+@app.route("/")
+def root():
+    return "Avtalbackend running!"
+
+
 class Agreement(Resource):
     def get(self, service_name):
         path = db.get_agreement_location(service_name)
