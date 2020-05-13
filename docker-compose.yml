@@ -1,53 +1,126 @@
-version: "2"
+version: "3"
+
+networks:
+    gamma:
+    avtal:
+
 services:
-  frontend:
-    build:
-      context: ./frontend/
-      dockerfile: dev.Dockerfile
-    ports:
-      - 3001:3000
-    environment:
-      REACT_APP_BACKEND_URL: http://localhost:8081/api
-    volumes:
-      - ./frontend/src:/usr/src/app/src
-      - ./frontend/public:/usr/src/app/public
-  db:
-    image: postgres:11
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: example
-    ports:
-      - 5432:5432
-  gamma_backend:
-    image: cthit/gamma-backend
-    environment:
-      DB_HOST: gamma_db
-      SERVER_PORT: 8081
-      FRONTEND_CLIENT_ID: 7hAdUEtMo4MgFnA7ZoZ41ohTe1NNRoJmjL67Gf0NIrrBnauyhc
-      FRONTEND_CLIENT_SECRET: secret
-      FRONTEND_REDIRECT_URI: http://localhost:3000/login
-      SUCCESSFUL_LOGIN: http://localhost:3000
-      DEFAULT_CLIENT_NAME: name
-      DEFAULT_CLIENT_ID: id
-      DEFAULT_CLIENT_SECRET: secret
-      DEFAULT_REDIRECT_URI: http://localhost:3001/auth/account/callback
-      DEFAULT_API_KEY: key
-      CORS_ALLOWED_ORIGIN: "*"
-    ports:
-      - 8081:8081
-    depends_on:
-      - gamma_db
-  gamma_frontend:
-    image: cthit/gamma-frontend:development
-    environment:
-      REACT_APP_BACKEND_URL: http://localhost:8081/api
-      REACT_APP_FRONTEND_URL: http://localhost:3000
-    ports:
-      - 3000:3000
-  gamma_db:
-    image: postgres:10
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: postgres
-    restart: always
+    frontend:
+        build:
+            context: ./frontend/
+            dockerfile: dev.Dockerfile
+        ports: 
+            - 3000:3000
+        environment: 
+            REACT_APP_BACKEND_URL: http://localhost:8080/api
+        tty: true
+        volumes: 
+            - ./frontend/src:/usr/src/app/src
+            - ./frontend/public:/usr/src/app/public
+        networks:
+            - avtal
+    
+    backend:
+        build:
+            context: ./backend/
+            dockerfile: dev.Dockerfile
+        ports:
+            - 8080:8080
+        volumes:
+            - ./backend:/usr/src/avtal/backend
+        environment: 
+            #API_KEY: SECRETKEY
+
+            POSTGRES_USER: avtaladmin
+            POSTGRES_PASSWORD: avtaladmin
+            POSTGRES_HOST: db
+            POSTGRES_PORT: 5432
+            POSTGRES_DB: postgres 
+
+            # FRONTEND_CLIENT_ID: ""
+            # FRONTEND_CLIENT_SECRET: ""
+            # FRONTEND_REDIRECT_URI: http://localhost:3001/login
+        networks:
+            - avtal
+            - gamma
+    
+    db:
+        image: postgres:11
+        restart: always
+        environment:
+            POSTGRES_USER: avtaladmin
+            POSTGRES_PASSWORD: avtaladmin
+            POSTGRES_HOST: db
+            POSTGRES_PORT: 5432
+            POSTGRES_DB: postgres 
+        ports:
+            - 5432:5432
+        networks:
+            - avtal
+
+    gamma-frontend:
+        image: cthit/gamma-frontend:development
+        environment:
+            HTTP_PROXY: http://gamma-backend:8081
+        networks:
+            - gamma
+        ports:
+            - 3001:3000
+
+    gamma-backend:
+        image: cthit/gamma-backend
+        environment:
+        # Default admin user name = admin
+        # Default admin password  = password
+
+            DB_USER: user
+            DB_PASSWORD: password
+            DB_HOST: gamma-db
+            DB_PORT: 5433
+            DB_NAME: postgres
+
+            REDIS_HOST: gamma-redis
+            REDIS_PASSWORD: ""
+            REDIS_PORT: 6379
+
+            GOTIFY_KEY: "123abc"
+            GOTIFY_URL: http://gamma-gotify:8080/mail
+
+            DEFAULT_CLIENT_NAME: demo
+            DEFAULT_CLIENT_ID: id
+            DEFAULT_CLIENT_SECRET: secret
+            DEFAULT_REDIRECT_URI: http://localhost:3001/auth/callback
+
+            SERVER_PORT: 8081
+            SUCCESSFUL_LOGIN: http://localhost:3001
+            CORS_ALLOWED_ORIGIN: http://localhost:3001
+            BACKEND_URI: http://localhost:8081
+            PRODUCTION: "false"
+            COOKIE_DOMAIN: localhost
+            IS_MOCKING_CLIENT: "true"
+        networks:
+            - gamma
+        ports:
+            - 8081:8081
+
+    gamma-redis:
+        image: redis:5.0
+        networks:
+            - gamma
+
+    gamma-gotify:
+        image: cthit/gotify
+        environment:
+            GOTIFY_PRE-SHARED-KEY: 123abc
+            GOTIFY_MOCK-MODE: "true"
+        networks:
+            - gamma
+
+    gamma-db:
+        image: postgres:10
+        environment:
+            POSTGRES_USER: user
+            POSTGRES_DB: postgres
+            POSTGRES_PASSWORD: password
+        networks:
+            - gamma

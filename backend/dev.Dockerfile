@@ -13,12 +13,6 @@ RUN chown -R avtal /usr/src/avtal/backend
 
 USER avtal
 
-ENV POSTGRES_USER postgres
-ENV POSTGRES_PASSWORD example
-ENV POSTGRES_HOST db
-ENV POSTGRES_PORT 5432
-ENV POSTGRES_DB postgres
-
-EXPOSE 5000
+EXPOSE 8080
 
 CMD ["sh", "start.sh"]

@@ -17,12 +17,6 @@ api = Api(app)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 # YYYY-MM-DDTHH:MM:SS
-#
-#
-#
-#
-#
-
 
 @app.route("/api/")
 @app.route("/")
@@ -70,4 +64,4 @@ api.add_resource(Accepted, '/api/accept/<string:service_name>')
 
 if __name__ == '__main__':
     setup.init_db()
-    app.run()
+    app.run(host='0.0.0.0', port=8080)
